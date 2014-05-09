@@ -74,7 +74,7 @@ fi;
 while ! /sbin/busybox pgrep android.process.acore ; do
   /sbin/busybox sleep 1
 done
-  /sbin/busybox sleep 10
+  /sbin/busybox sleep 5
 
 # Iniciar efs_backup
 /res/ext/efs_backup.sh
@@ -84,6 +84,10 @@ done
 
 # Iniciar MTP/adb
 /res/ext/usb_mtp.sh
+
+/sbin/busybox sleep 8
+
+sync
 
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
 /sbin/busybox mount -o remount,ro /system

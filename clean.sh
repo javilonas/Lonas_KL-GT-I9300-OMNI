@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin/arm-linux-androideabi-"
-DIR="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy"
+DIR="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-OMNI"
 
 echo "#################### Eliminando Restos ####################"
 if [ -e boot.img ]; then

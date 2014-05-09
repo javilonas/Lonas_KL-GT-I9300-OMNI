@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Build Script: Javilonas, 14-12-2013
 # Javilonas <admin@lonasdigital.com>
 
@@ -39,10 +39,10 @@ fi
 
 TOOLCHAIN="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin/arm-linux-androideabi-"
 TOOLCHAIN_PATCH="/home/lonas/Kernel_Lonas/toolchains/android-ndk-r9d/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86/bin"
-ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-Sammy/ramdisk"
+ROOTFS_PATH="/home/lonas/Kernel_Lonas/Lonas_KL-GT-I9300-OMNI/ramdisk"
 RAMFS_TMP="/home/lonas/Kernel_Lonas/tmp/ramfs-source-sgs3"
-export KERNEL_VERSION="Lonas-KL-7.3"
-VERSION_KL="Sammy"
+export KERNEL_VERSION="Lonas-KL-7.4"
+VERSION_KL="OMNI"
 REVISION="RTM"
 
 export KBUILD_BUILD_VERSION="1"
@@ -80,18 +80,19 @@ rm -rf $KERNELDIR/arch/arm/boot/zImage
 echo "#################### Make defconfig ####################"
 make ARCH=arm CROSS_COMPILE=$TOOLCHAIN lonas_defconfig
 
-nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
+nice -n 10 make -j7 ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
-# nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
+#nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
-# make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
+#make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN >> compile.log 2>&1 || exit -1
 
 make -j`grep 'processor' /proc/cpuinfo | wc -l` ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
 
 mkdir -p $ROOTFS_PATH/lib/modules
+mkdir -p $ROOTFS_PATH/system/lib
+ln -s $ROOTFS_PATH/lib/modules/ $ROOTFS_PATH/system/lib
 find . -name '*.ko' -exec cp -av {} $ROOTFS_PATH/lib/modules/ \;
 $TOOLCHAIN_PATCH/arm-linux-androideabi-strip --strip-unneeded $ROOTFS_PATH/lib/modules/*.ko
-#unzip /home/lonas/Kernel_Lonas/proprietary-modules/proprietary-modules.zip -d $KERNELDIR/ramdisk/lib/modules
 
 echo "#################### Update Ramdisk ####################"
 rm -f $KERNELDIR/releasetools/tar/$KERNEL_VERSION-$REVISION$KBUILD_BUILD_VERSION-$VERSION_KL.tar
@@ -120,7 +121,7 @@ gzip -9 -f $RAMFS_TMP.cpio
 echo "#################### Compilar Kernel ####################"
 cd $KERNELDIR
 
-nice -n 10 make -j6 ARCH=arm CROSS_COMPILE=$TOOLCHAIN zImage || exit 1
+nice -n 10 make -j7 ARCH=arm CROSS_COMPILE=$TOOLCHAIN zImage || exit 1
 
 echo "#################### Generar boot.img ####################"
 ./mkbootimg --kernel $KERNELDIR/arch/arm/boot/zImage --ramdisk $RAMFS_TMP.cpio.gz --board smdk4x12 --base 0x10000000 --pagesize 2048 --ramdiskaddr 0x11000000 -o $KERNELDIR/boot.img

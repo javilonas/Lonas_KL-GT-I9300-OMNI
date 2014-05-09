@@ -18,6 +18,12 @@ if [ ! -f /system/bin/busybox ]; then
 /sbin/busybox ln -s /sbin/busybox /system/bin/pkill
 fi
 
+# Enlace simbólico a modulos
+if [ ! -f /system/lib/modules ]; then
+/sbin/busybox mkdir -p /system/lib
+/sbin/busybox ln -s /lib/modules/ /system/lib
+fi
+
 # soporte LPowerCC
 /sbin/busybox rm /data/.lpowercc/lpowercc.xml
 /sbin/busybox rm /data/.lpowercc/action.cache

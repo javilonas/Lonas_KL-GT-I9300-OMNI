@@ -296,7 +296,7 @@ echo '
     <settingsPane name="VFS Cache Pressure" 
                   description="Esto controla la tendencia del nucleo para recuperar la memoria que se utiliza para el almacenamiento en caché de objetos de directorios e inodos (dentries e inodes). Un valor muy bajo puede causar pérdida de memoria y lentitud, por contra un valor muy alto gastará mucha mas batería, lo idea es encontrar algo intermedio.">
      
-      <seekBar  description="Por defecto: 50." 
+      <seekBar  description="Por defecto: 40." 
                 name="VFS Cache Pressure" 
                 action="generic /proc/sys/vm/vfs_cache_pressure"
                 unit="%" min="0" reversed="false" step="1" max="500"/>
@@ -306,7 +306,7 @@ echo '
     <settingsPane name="Dirty Ratio" 
                   description="Con vm.dirty_ratio modificas el porcentaje total de memoria que puede ser consumido por la cache de páginas antes de pasar a escribir en disco duro directamente.">
      
-      <seekBar  description="Por defecto: 80." 
+      <seekBar  description="Por defecto: 25." 
                 name="Dirty Ratio" 
                 action="generic /proc/sys/vm/dirty_ratio"
                 unit="%" min="0" reversed="false" step="1" max="100"/>
@@ -316,7 +316,7 @@ echo '
     <settingsPane name="Dirty Background Ratio" 
                   description="Con vm.dirty_background_ratio modifcas el porcentaje máximo que se puede usar para cache de paginas en RAM antes de pasar a disco duro.">
      
-      <seekBar  description="Por defecto: 70." 
+      <seekBar  description="Por defecto: 10." 
                 name="Dirty Background Ratio" 
                 action="generic /proc/sys/vm/dirty_background_ratio"
                 unit="%" min="0" reversed="false" step="1" max="100"/>
@@ -324,9 +324,9 @@ echo '
     </settingsPane>
 
     <settingsPane name="Dirty Writeback Centisecs" 
-                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 3000, que equivale a 3 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
+                  description="Esto le indica al kernel cada cuantos segundos debe escribir los datos al disco. El valor por defecto es de 2500, que equivale a 2,5 segundos. Este parámetro puede influir bastante en rendimiento y gasto de batería, así que ojo con el">
      
-      <seekBar  description="Por defecto: 3000." 
+      <seekBar  description="Por defecto: 2500." 
                 name="Dirty Writeback Centisecs" 
                 action="generic /proc/sys/vm/dirty_writeback_centisecs"
                 unit="%" min="0" reversed="false" step="1" max="6000"/>
