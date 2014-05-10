@@ -51,7 +51,7 @@ ui_print(" ");
 ui_print(" - Flasheando kernel Lonas-KL ");
 ui_print(" ");
 ui_print(" ");
-ui_print(" - Version: [Lonas-KL v.7.4] ");
+ui_print(" - Version: [Lonas-KL v.7.5] ");
 ui_print(" ");
 ui_print(" ");
 assert(package_extract_file("boot.img", "/tmp/boot.img"),
